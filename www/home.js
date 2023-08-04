@@ -11,6 +11,7 @@ Vue.createApp({
     },
     goToRoom() {
       window.location = "/" + this.roomId;
+      console.log("/" + this.roomId);
     },
   },
 }).mount("#app");
