@@ -57,7 +57,7 @@ function initiateCall() {
     /macintosh/.test(App.userAgent.toLowerCase()) && "ontouchend" in document;
   App.isDesktop = !App.isMobileDevice && !App.isTablet && !App.isIpad;
 
-  App.roomId = ROOM_ID;
+  //   App.roomId = ROOM_ID;
 
   App.roomLink = `${APP_URL}/${ROOM_ID}`;
 
