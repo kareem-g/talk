@@ -57,7 +57,7 @@ function initiateCall() {
     /macintosh/.test(App.userAgent.toLowerCase()) && "ontouchend" in document;
   App.isDesktop = !App.isMobileDevice && !App.isTablet && !App.isIpad;
 
-  // App.roomId = ROOM_ID;
+  App.roomId = ROOM_ID;
 
   App.roomLink = `${APP_URL}/${ROOM_ID}`;
 
@@ -80,10 +80,30 @@ function initiateCall() {
       isDesktop: App.isDesktop,
     };
 
-    if (localMediaStream) joinChatChannel(ROOM_ID, userData);
+    if (localMediaStream) {
+      const urlParams = new URLSearchParams(window.location.pathname);
+      const room_id = urlParams.get("room_id");
+
+      if (room_id) {
+        joinChatChannel(room_id, userData);
+      } else {
+        // Handle the case when the room_id is not provided in the URL
+        console.error("Room ID is not provided in the URL.");
+      }
+    }
+    // joinChatChannel(ROOM_ID, userData);
     else
       setupLocalMedia(function () {
-        joinChatChannel(ROOM_ID, userData);
+        // joinChatChannel(ROOM_ID, userData);
+        const urlParams = new URLSearchParams(window.location.pathname);
+        const room_id = urlParams.get("room_id");
+
+        if (room_id) {
+          joinChatChannel(room_id, userData);
+        } else {
+          // Handle the case when the room_id is not provided in the URL
+          console.error("Room ID is not provided in the URL.");
+        }
       });
   });
 
