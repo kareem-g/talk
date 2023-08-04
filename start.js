@@ -18,6 +18,12 @@ app.use(express.static(path.join(__dirname, "icons")));
 app.use(express.static(path.join(__dirname, "assets")));
 app.use(express.static(path.join(__dirname, "node_modules/vue/dist/")));
 
+// Always return the Vue app's index.html for all routes
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'www/index.html'));
+  });
+
+  
 server.listen(PORT, null, () => {
 	console.log("Talk server started");
 	console.log({ port: PORT, node_version: process.versions.node });
