@@ -10,8 +10,7 @@ Vue.createApp({
       this.roomId = Math.random().toString(36).substr(2, 6);
     },
     goToRoom() {
-      window.location = "/" + this.roomId;
-      console.log("/" + this.roomId);
+      "https://master--talkily.netlify.app" = "/" + this.roomId;
     },
   },
 }).mount("#app");
