@@ -4,7 +4,9 @@ const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
-	cors: { origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : "*" },
+  cors: {
+    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : "*",
+  },
 });
 
 const signallingServer = require("./server/signalling-server.js");
@@ -18,24 +20,24 @@ app.use(express.static(path.join(__dirname, "icons")));
 app.use(express.static(path.join(__dirname, "assets")));
 app.use(express.static(path.join(__dirname, "node_modules/vue/dist/")));
 
-// Always return the Vue app's index.html for all routes
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'www/index.html'));
-  });
-
-  
 server.listen(PORT, null, () => {
-	console.log("Talk server started");
-	console.log({ port: PORT, node_version: process.versions.node });
+  console.log("Talk server started");
+  console.log({ port: PORT, node_version: process.versions.node });
 });
 
 // serve the landing page
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "www/index.html")));
+app.get("/", (req, res) =>
+  res.sendFile(path.join(__dirname, "www/index.html"))
+);
 
 // serve the terms / legal page
-app.get("/legal", (req, res) => res.sendFile(path.join(__dirname, "www/legal.html")));
+app.get("/legal", (req, res) =>
+  res.sendFile(path.join(__dirname, "www/legal.html"))
+);
 
 // All other URL patterns will serve the app.
-app.get("/:room", (req, res) => res.sendFile(path.join(__dirname, "www/app.html")));
+app.get("/:room", (req, res) =>
+  res.sendFile(path.join(__dirname, "www/app.html"))
+);
 
 io.sockets.on("connection", signallingServer);
