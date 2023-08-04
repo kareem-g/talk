@@ -21,14 +21,18 @@ const APP_URL = (() => {
   );
 })();
 
-// const ROOM_ID = (() => {
-// 	let roomName = location.pathname.substring(1);
-// 	if (!roomName) {
-// 		roomName = Math.random().toString(36).substr(2, 6);
-// 		window.history.pushState({ url: `${APP_URL}/${roomName}` }, roomName, `${APP_URL}/${roomName}`);
-// 	}
-// 	return roomName;
-// })();
+const ROOM_ID = (() => {
+  let roomName = location.pathname.substring(1);
+  if (!roomName) {
+    roomName = Math.random().toString(36).substr(2, 6);
+    window.history.pushState(
+      { url: `${APP_URL}/${roomName}` },
+      roomName,
+      `${APP_URL}/${roomName}`
+    );
+  }
+  return roomName;
+})();
 
 const USE_AUDIO = true;
 const USE_VIDEO = true;
@@ -57,7 +61,7 @@ function initiateCall() {
     /macintosh/.test(App.userAgent.toLowerCase()) && "ontouchend" in document;
   App.isDesktop = !App.isMobileDevice && !App.isTablet && !App.isIpad;
 
-  //   App.roomId = ROOM_ID;
+  App.roomId = ROOM_ID;
 
   App.roomLink = `${APP_URL}/${ROOM_ID}`;
 
@@ -80,30 +84,10 @@ function initiateCall() {
       isDesktop: App.isDesktop,
     };
 
-    if (localMediaStream) {
-      const urlParams = new URLSearchParams(window.location.pathname);
-      const room_id = urlParams.get("room_id");
-
-      if (room_id) {
-        joinChatChannel(room_id, userData);
-      } else {
-        // Handle the case when the room_id is not provided in the URL
-        console.error("Room ID is not provided in the URL.");
-      }
-    }
-    // joinChatChannel(ROOM_ID, userData);
+    if (localMediaStream) joinChatChannel(ROOM_ID, userData);
     else
       setupLocalMedia(function () {
-        // joinChatChannel(ROOM_ID, userData);
-        const urlParams = new URLSearchParams(window.location.pathname);
-        const room_id = urlParams.get("room_id");
-
-        if (room_id) {
-          joinChatChannel(room_id, userData);
-        } else {
-          // Handle the case when the room_id is not provided in the URL
-          console.error("Room ID is not provided in the URL.");
-        }
+        joinChatChannel(ROOM_ID, userData);
       });
   });
 
